@@ -4,16 +4,16 @@
 #pragma once
 
 #include "../interfaces/tft_interface.h"
-#include "../libs/elegoo_gfx.h"
+#include "../libs/gfx.h"
 
 #define TFTWIDTH 240
 #define TFTHEIGHT 320
 
-class ElegooTFT : public ElegooGFX {
+class TFT : public GFX {
   tftInterface *tft_interface;
 
 public:
-  ElegooTFT(tftInterface *tft_interface);
+  TFT(tftInterface *tft_interface);
   void init();
   void drawPixel(int16_t x, int16_t y, uint16_t color);
   void setRotation(uint8_t rotation);

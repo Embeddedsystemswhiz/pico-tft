@@ -11,10 +11,10 @@
 
 #define boolean uint8_t
 
-class ElegooGFX : public Print {
+class GFX : public Print {
 
 public:
-  ElegooGFX(int16_t w, int16_t h); // Constructor
+  GFX(int16_t w, int16_t h); // Constructor
 
   // This MUST be defined by the subclass:
   virtual void drawPixel(int16_t x, int16_t y, uint16_t color) = 0;
@@ -78,11 +78,11 @@ protected:
       _cp437;   // If set, use correct CP437 charset (default is off)
 };
 
-class ElegooGFXButton {
+class GFXButton {
 
 public:
-  ElegooGFXButton(void);
-  void initButton(ElegooGFX *gfx, int16_t x, int16_t y, uint8_t w, uint8_t h,
+  GFXButton(void);
+  void initButton(GFX *gfx, int16_t x, int16_t y, uint8_t w, uint8_t h,
                   uint16_t outline, uint16_t fill, uint16_t textcolor,
                   char *label, uint8_t textsize);
   void drawButton(boolean inverted = false);
@@ -94,7 +94,7 @@ public:
   boolean justReleased();
 
 private:
-  ElegooGFX *_gfx;
+  GFX *_gfx;
   int16_t _x, _y;
   uint16_t _w, _h;
   uint8_t _textsize;

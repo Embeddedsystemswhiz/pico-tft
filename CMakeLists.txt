@@ -20,8 +20,8 @@ set(CMAKE_INSTALL_PREFIX ../install)
 pico_sdk_init()
 add_executable(tft_test
         src/main.cpp
-        src/drivers/elegoo_tft.cpp
-        src/libs/elegoo_gfx.cpp
+        src/drivers/tft.cpp
+        src/libs/gfx.cpp
         src/libs/print.cpp
         )
 
@@ -29,7 +29,7 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 # Pull in our pico_stdlib which pulls in commonly used features
 target_link_libraries(tft_test pico_stdlib  m)
-target_link_options(tft_test PRIVATE -Wl,--print-memory-usage)
+target_link_options(tft_test PRIVATE -Wl,--print-memory-usage -Wl,-Map=tft_test.map)
 
 target_compile_options(tft_test PRIVATE -g3 -O0)
 

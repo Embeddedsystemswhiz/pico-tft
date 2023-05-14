@@ -1,18 +1,18 @@
 // Based of Graphics library by ladyada/Elegoo with init code from Rossum
 // MIT license
 
-#include "elegoo_tft.h"
-#include "hardware/gpio.h"
+#include "tft.h"
+// TODO: remove pico specific dependency
 #include "pico/stdlib.h"
 #include "register.h"
 
 #include <stdint.h>
 #include <stdio.h>
 
-ElegooTFT::ElegooTFT(tftInterface *tft_interface)
-    : tft_interface(tft_interface), ElegooGFX(TFTWIDTH, TFTHEIGHT) {}
+TFT::TFT(tftInterface *tft_interface)
+    : tft_interface(tft_interface), GFX(TFTWIDTH, TFTHEIGHT) {}
 
-void ElegooTFT::init() {
+void TFT::init() {
   rotation = 0;
   setRotation(rotation);
   tft_interface->writeRegister8(ILI9341_SOFTRESET, 0);
@@ -40,7 +40,7 @@ void ElegooTFT::init() {
   setAddrWindow(0, 0, _width - 1, _height - 1);
 }
 
-void ElegooTFT::drawPixel(int16_t x, int16_t y, uint16_t color) {
+void TFT::drawPixel(int16_t x, int16_t y, uint16_t color) {
 
   // Clip
   if ((x < 0) || (y < 0) || (x >= _width) || (y >= _height))
@@ -51,10 +51,10 @@ void ElegooTFT::drawPixel(int16_t x, int16_t y, uint16_t color) {
   tft_interface->write(0x2c, 1, color, 2);
 }
 
-void ElegooTFT::setRotation(uint8_t rotation) {
+void TFT::setRotation(uint8_t rotation) {
   uint16_t t;
 
-  ElegooGFX::setRotation(rotation);
+  GFX::setRotation(rotation);
 
   switch (rotation) {
   case 2:
@@ -75,7 +75,7 @@ void ElegooTFT::setRotation(uint8_t rotation) {
   setAddrWindow(0, 0, _width - 1, _height - 1);     // CS_IDLE happens here
 }
 
-void ElegooTFT::setAddrWindow(int x1, int y1, int x2, int y2) {
+void TFT::setAddrWindow(int x1, int y1, int x2, int y2) {
   uint32_t t;
 
   t = x1;
@@ -90,7 +90,7 @@ void ElegooTFT::setAddrWindow(int x1, int y1, int x2, int y2) {
                                  t); // HX8357D uses same registers!
 }
 
-void ElegooTFT::flood(uint16_t color, uint32_t len) {
+void TFT::flood(uint16_t color, uint32_t len) {
   uint16_t blocks;
   uint8_t i, hi = color >> 8, lo = color;
 
@@ -145,14 +145,14 @@ void ElegooTFT::flood(uint16_t color, uint32_t len) {
   // }
 }
 
-void ElegooTFT::fillScreen(uint16_t color) {
+void TFT::fillScreen(uint16_t color) {
 
   setAddrWindow(0, 0, _width - 1, _height - 1);
 
   flood(color, (long)TFTWIDTH * (long)TFTHEIGHT);
 }
 
-void ElegooTFT::sleep(bool action) {
+void TFT::sleep(bool action) {
   if (action)
     tft_interface->writeRegister8(ILI9341_DISPLAYOFF, action);
   else
