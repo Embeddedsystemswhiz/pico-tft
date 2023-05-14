@@ -3,10 +3,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
-class tft_interface {
+class tftInterface {
 public:
-  tft_interface() = default;
-  virtual ~tft_interface() = default;
+  tftInterface() = default;
+  virtual ~tftInterface() = default;
   virtual void write(const uint32_t command, size_t cmd_length,
                      const uint32_t data, size_t data_length) = 0;
   virtual void read(const uint8_t command, uint8_t *data, size_t length) = 0;

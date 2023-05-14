@@ -5,15 +5,16 @@
 #include <stdint.h>
 #include <string.h>
 
-#define swap(a, b) { int16_t t = a; a = b; b = t; }
-
+// clang-format off
+#define swap(a, b) { int16_t t = a;  a = b; b = t; }
+// clang-format on
 
 #define boolean uint8_t
 
-class elegoo_gfx : public Print {
+class ElegooGFX : public Print {
 
 public:
-  elegoo_gfx(int16_t w, int16_t h); // Constructor
+  ElegooGFX(int16_t w, int16_t h); // Constructor
 
   // This MUST be defined by the subclass:
   virtual void drawPixel(int16_t x, int16_t y, uint16_t color) = 0;
@@ -77,11 +78,11 @@ protected:
       _cp437;   // If set, use correct CP437 charset (default is off)
 };
 
-class elegoo_gfx_Button {
+class ElegooGFXButton {
 
 public:
-  elegoo_gfx_Button(void);
-  void initButton(elegoo_gfx *gfx, int16_t x, int16_t y, uint8_t w, uint8_t h,
+  ElegooGFXButton(void);
+  void initButton(ElegooGFX *gfx, int16_t x, int16_t y, uint8_t w, uint8_t h,
                   uint16_t outline, uint16_t fill, uint16_t textcolor,
                   char *label, uint8_t textsize);
   void drawButton(boolean inverted = false);
@@ -93,7 +94,7 @@ public:
   boolean justReleased();
 
 private:
-  elegoo_gfx *_gfx;
+  ElegooGFX *_gfx;
   int16_t _x, _y;
   uint16_t _w, _h;
   uint8_t _textsize;

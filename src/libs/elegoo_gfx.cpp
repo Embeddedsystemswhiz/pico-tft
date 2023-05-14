@@ -32,15 +32,15 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include <math.h>
+//
 #include "elegoo_gfx.h"
 #include "glcdfont.c"
-
 
 #ifndef min
 #define min(a, b) ((a < b) ? a : b)
 #endif
 
-elegoo_gfx::elegoo_gfx(int16_t w, int16_t h) : WIDTH(w), HEIGHT(h) {
+ElegooGFX::ElegooGFX(int16_t w, int16_t h) : WIDTH(w), HEIGHT(h) {
   _width = WIDTH;
   _height = HEIGHT;
   rotation = 0;
@@ -52,7 +52,7 @@ elegoo_gfx::elegoo_gfx(int16_t w, int16_t h) : WIDTH(w), HEIGHT(h) {
 }
 
 // Draw a circle outline
-void elegoo_gfx::drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
+void ElegooGFX::drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
   int16_t f = 1 - r;
   int16_t ddF_x = 1;
   int16_t ddF_y = -2 * r;
@@ -85,8 +85,8 @@ void elegoo_gfx::drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
   }
 }
 
-void elegoo_gfx::drawCircleHelper(int16_t x0, int16_t y0, int16_t r,
-                                  uint8_t cornername, uint16_t color) {
+void ElegooGFX::drawCircleHelper(int16_t x0, int16_t y0, int16_t r,
+                                 uint8_t cornername, uint16_t color) {
   int16_t f = 1 - r;
   int16_t ddF_x = 1;
   int16_t ddF_y = -2 * r;
@@ -121,15 +121,15 @@ void elegoo_gfx::drawCircleHelper(int16_t x0, int16_t y0, int16_t r,
   }
 }
 
-void elegoo_gfx::fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
+void ElegooGFX::fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
   drawFastVLine(x0, y0 - r, 2 * r + 1, color);
   fillCircleHelper(x0, y0, r, 3, 0, color);
 }
 
 // Used to do circles and roundrects
-void elegoo_gfx::fillCircleHelper(int16_t x0, int16_t y0, int16_t r,
-                                  uint8_t cornername, int16_t delta,
-                                  uint16_t color) {
+void ElegooGFX::fillCircleHelper(int16_t x0, int16_t y0, int16_t r,
+                                 uint8_t cornername, int16_t delta,
+                                 uint16_t color) {
 
   int16_t f = 1 - r;
   int16_t ddF_x = 1;
@@ -159,8 +159,8 @@ void elegoo_gfx::fillCircleHelper(int16_t x0, int16_t y0, int16_t r,
 }
 
 // Bresenham's algorithm - thx wikpedia
-void elegoo_gfx::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
-                          uint16_t color) {
+void ElegooGFX::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
+                         uint16_t color) {
   int16_t steep = abs(y1 - y0) > abs(x1 - x0);
   if (steep) {
     swap(x0, y0);
@@ -200,41 +200,39 @@ void elegoo_gfx::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
 }
 
 // Draw a rectangle
-void elegoo_gfx::drawRect(int16_t x, int16_t y, int16_t w, int16_t h,
-                          uint16_t color) {
+void ElegooGFX::drawRect(int16_t x, int16_t y, int16_t w, int16_t h,
+                         uint16_t color) {
   drawFastHLine(x, y, w, color);
   drawFastHLine(x, y + h - 1, w, color);
   drawFastVLine(x, y, h, color);
   drawFastVLine(x + w - 1, y, h, color);
 }
 
-void elegoo_gfx::drawFastVLine(int16_t x, int16_t y, int16_t h,
-                               uint16_t color) {
+void ElegooGFX::drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color) {
   // Update in subclasses if desired!
   drawLine(x, y, x, y + h - 1, color);
 }
 
-void elegoo_gfx::drawFastHLine(int16_t x, int16_t y, int16_t w,
-                               uint16_t color) {
+void ElegooGFX::drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color) {
   // Update in subclasses if desired!
   drawLine(x, y, x + w - 1, y, color);
 }
 
-void elegoo_gfx::fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
-                          uint16_t color) {
+void ElegooGFX::fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
+                         uint16_t color) {
   // Update in subclasses if desired!
   for (int16_t i = x; i < x + w; i++) {
     drawFastVLine(i, y, h, color);
   }
 }
 
-void elegoo_gfx::fillScreen(uint16_t color) {
+void ElegooGFX::fillScreen(uint16_t color) {
   fillRect(0, 0, _width, _height, color);
 }
 
 // Draw a rounded rectangle
-void elegoo_gfx::drawRoundRect(int16_t x, int16_t y, int16_t w, int16_t h,
-                               int16_t r, uint16_t color) {
+void ElegooGFX::drawRoundRect(int16_t x, int16_t y, int16_t w, int16_t h,
+                              int16_t r, uint16_t color) {
   // smarter version
   drawFastHLine(x + r, y, w - 2 * r, color);         // Top
   drawFastHLine(x + r, y + h - 1, w - 2 * r, color); // Bottom
@@ -248,8 +246,8 @@ void elegoo_gfx::drawRoundRect(int16_t x, int16_t y, int16_t w, int16_t h,
 }
 
 // Fill a rounded rectangle
-void elegoo_gfx::fillRoundRect(int16_t x, int16_t y, int16_t w, int16_t h,
-                               int16_t r, uint16_t color) {
+void ElegooGFX::fillRoundRect(int16_t x, int16_t y, int16_t w, int16_t h,
+                              int16_t r, uint16_t color) {
   // smarter version
   fillRect(x + r, y, w - 2 * r, h, color);
 
@@ -259,16 +257,16 @@ void elegoo_gfx::fillRoundRect(int16_t x, int16_t y, int16_t w, int16_t h,
 }
 
 // Draw a triangle
-void elegoo_gfx::drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
-                              int16_t x2, int16_t y2, uint16_t color) {
+void ElegooGFX::drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
+                             int16_t x2, int16_t y2, uint16_t color) {
   drawLine(x0, y0, x1, y1, color);
   drawLine(x1, y1, x2, y2, color);
   drawLine(x2, y2, x0, y0, color);
 }
 
 // Fill a triangle
-void elegoo_gfx::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
-                              int16_t x2, int16_t y2, uint16_t color) {
+void ElegooGFX::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
+                             int16_t x2, int16_t y2, uint16_t color) {
 
   int16_t a, b, y, last;
 
@@ -348,8 +346,8 @@ void elegoo_gfx::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
   }
 }
 
-void elegoo_gfx::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
-                            int16_t w, int16_t h, uint16_t color) {
+void ElegooGFX::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
+                           int16_t w, int16_t h, uint16_t color) {
 
   int16_t i, j, byteWidth = (w + 7) / 8;
 
@@ -365,8 +363,8 @@ void elegoo_gfx::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
 // Draw a 1-bit color bitmap at the specified x, y position from the
 // provided bitmap buffer (must be PROGMEM memory) using color as the
 // foreground color and bg as the background color.
-void elegoo_gfx::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
-                            int16_t w, int16_t h, uint16_t color, uint16_t bg) {
+void ElegooGFX::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
+                           int16_t w, int16_t h, uint16_t color, uint16_t bg) {
 
   int16_t i, j, byteWidth = (w + 7) / 8;
 
@@ -384,8 +382,8 @@ void elegoo_gfx::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
 // Draw XBitMap Files (*.xbm), exported from GIMP,
 // Usage: Export from GIMP to *.xbm, rename *.xbm to *.c and open in editor.
 // C Array can be directly used with this function
-void elegoo_gfx::drawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
-                             int16_t w, int16_t h, uint16_t color) {
+void ElegooGFX::drawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
+                            int16_t w, int16_t h, uint16_t color) {
 
   int16_t i, j, byteWidth = (w + 7) / 8;
 
@@ -398,7 +396,7 @@ void elegoo_gfx::drawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
   }
 }
 
-size_t elegoo_gfx::write(uint8_t c) {
+size_t ElegooGFX::write(uint8_t c) {
 
   if (c == '\n') {
     cursor_y += textsize * 8;
@@ -413,13 +411,12 @@ size_t elegoo_gfx::write(uint8_t c) {
       cursor_x = 0;
     }
   }
-return 1;
-
+  return 1;
 }
 
 // Draw a character
-void elegoo_gfx::drawChar(int16_t x, int16_t y, unsigned char c, uint16_t color,
-                          uint16_t bg, uint8_t size) {
+void ElegooGFX::drawChar(int16_t x, int16_t y, unsigned char c, uint16_t color,
+                         uint16_t bg, uint8_t size) {
 
   if ((x >= _width) ||            // Clip right
       (y >= _height) ||           // Clip bottom
@@ -455,33 +452,33 @@ void elegoo_gfx::drawChar(int16_t x, int16_t y, unsigned char c, uint16_t color,
   }
 }
 
-void elegoo_gfx::setCursor(int16_t x, int16_t y) {
+void ElegooGFX::setCursor(int16_t x, int16_t y) {
   cursor_x = x;
   cursor_y = y;
 }
 
-int16_t elegoo_gfx::getCursorX(void) const { return cursor_x; }
+int16_t ElegooGFX::getCursorX(void) const { return cursor_x; }
 
-int16_t elegoo_gfx::getCursorY(void) const { return cursor_y; }
+int16_t ElegooGFX::getCursorY(void) const { return cursor_y; }
 
-void elegoo_gfx::setTextSize(uint8_t s) { textsize = (s > 0) ? s : 1; }
+void ElegooGFX::setTextSize(uint8_t s) { textsize = (s > 0) ? s : 1; }
 
-void elegoo_gfx::setTextColor(uint16_t c) {
+void ElegooGFX::setTextColor(uint16_t c) {
   // For 'transparent' background, we'll set the bg
   // to the same as fg instead of using a flag
   textcolor = textbgcolor = c;
 }
 
-void elegoo_gfx::setTextColor(uint16_t c, uint16_t b) {
+void ElegooGFX::setTextColor(uint16_t c, uint16_t b) {
   textcolor = c;
   textbgcolor = b;
 }
 
-void elegoo_gfx::setTextWrap(boolean w) { wrap = w; }
+void ElegooGFX::setTextWrap(boolean w) { wrap = w; }
 
-uint8_t elegoo_gfx::getRotation(void) const { return rotation; }
+uint8_t ElegooGFX::getRotation(void) const { return rotation; }
 
-void elegoo_gfx::setRotation(uint8_t x) {
+void ElegooGFX::setRotation(uint8_t x) {
   rotation = (x & 3);
   switch (rotation) {
   case 0:
@@ -504,26 +501,26 @@ void elegoo_gfx::setRotation(uint8_t x) {
 // with the erroneous character indices.  By default, the library uses the
 // original 'wrong' behavior and old sketches will still work.  Pass 'true'
 // to this function to use correct CP437 character values in your code.
-void elegoo_gfx::cp437(boolean x) { _cp437 = x; }
+void ElegooGFX::cp437(boolean x) { _cp437 = x; }
 
 // Return the size of the display (per current rotation)
-int16_t elegoo_gfx::width(void) const { return _width; }
+int16_t ElegooGFX::width(void) const { return _width; }
 
-int16_t elegoo_gfx::height(void) const { return _height; }
+int16_t ElegooGFX::height(void) const { return _height; }
 
-void elegoo_gfx::invertDisplay(boolean i) {
+void ElegooGFX::invertDisplay(boolean i) {
   // Do nothing, must be subclassed if supported
 }
 
 /***************************************************************************/
 // code for the GFX button UI element
 
-elegoo_gfx_Button::elegoo_gfx_Button(void) { _gfx = 0; }
+ElegooGFXButton::ElegooGFXButton(void) { _gfx = 0; }
 
-void elegoo_gfx_Button::initButton(elegoo_gfx *gfx, int16_t x, int16_t y,
-                                   uint8_t w, uint8_t h, uint16_t outline,
-                                   uint16_t fill, uint16_t textcolor,
-                                   char *label, uint8_t textsize) {
+void ElegooGFXButton::initButton(ElegooGFX *gfx, int16_t x, int16_t y,
+                                 uint8_t w, uint8_t h, uint16_t outline,
+                                 uint16_t fill, uint16_t textcolor, char *label,
+                                 uint8_t textsize) {
   _x = x;
   _y = y;
   _w = w;
@@ -537,7 +534,7 @@ void elegoo_gfx_Button::initButton(elegoo_gfx *gfx, int16_t x, int16_t y,
   _label[9] = 0;
 }
 
-void elegoo_gfx_Button::drawButton(boolean inverted) {
+void ElegooGFXButton::drawButton(boolean inverted) {
   uint16_t fill, outline, text;
 
   if (!inverted) {
@@ -562,7 +559,7 @@ void elegoo_gfx_Button::drawButton(boolean inverted) {
   //  _gfx->print(_label);
 }
 
-boolean elegoo_gfx_Button::contains(int16_t x, int16_t y) {
+boolean ElegooGFXButton::contains(int16_t x, int16_t y) {
   if ((x < (_x - _w / 2)) || (x > (_x + _w / 2)))
     return false;
   if ((y < (_y - _h / 2)) || (y > (_y + _h / 2)))
@@ -570,11 +567,11 @@ boolean elegoo_gfx_Button::contains(int16_t x, int16_t y) {
   return true;
 }
 
-void elegoo_gfx_Button::press(boolean p) {
+void ElegooGFXButton::press(boolean p) {
   laststate = currstate;
   currstate = p;
 }
 
-boolean elegoo_gfx_Button::isPressed() { return currstate; }
-boolean elegoo_gfx_Button::justPressed() { return (currstate && !laststate); }
-boolean elegoo_gfx_Button::justReleased() { return (!currstate && laststate); }
+boolean ElegooGFXButton::isPressed() { return currstate; }
+boolean ElegooGFXButton::justPressed() { return (currstate && !laststate); }
+boolean ElegooGFXButton::justReleased() { return (!currstate && laststate); }

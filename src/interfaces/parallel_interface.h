@@ -11,7 +11,8 @@
  *        Refer data-sheet
  * here[https://cdn-shop.adafruit.com/datasheets/ILI9341.pdf]
  */
-class parallel_interface : public tft_interface {
+class parallelInterface : public tftInterface {
+
 private:
   static constexpr uint8_t DATA_OFFSET = 0;
   static constexpr uint8_t RST_OFFSET = 8;
@@ -48,10 +49,11 @@ private:
 public:
   /*
    * @brief Constructor, initialises the GPIO with an offset
+   *
    * NOTE: It is assumed that data bit of gpio are continuous followed by rst,
    * cs, cd, wr, rd
    */
-  parallel_interface(uint8_t gpio_offset) : gpio_offset(gpio_offset) {
+  parallelInterface(uint8_t gpio_offset) : gpio_offset(gpio_offset) {
     gpio_init_mask(0x1fff << gpio_offset);
     gpio_set_dir_masked(0x1fff << gpio_offset, 0x1fff);
     reset();
@@ -59,11 +61,12 @@ public:
     cs_state(false);
   }
 
-  parallel_interface() = delete;
+  parallelInterface() = delete;
+  virtual ~parallelInterface() = default;
 
   void inline write(const uint32_t command, size_t cmd_length,
                     const uint32_t data, size_t data_length) override {
-    // cs_state(false);
+   // cs_state(false);
 
     do {
       write8cmd((command >> (8 * (cmd_length - 1))) & 0xff);
@@ -73,7 +76,7 @@ public:
       write8data((data >> (8 * (data_length - 1))) & 0xff);
     } while (--data_length);
 
-    // cs_state(true);
+  //  cs_state(true);
   }
   void writeRegister8(uint8_t cmd, uint8_t data) { write(cmd, 1, data, 1); }
 

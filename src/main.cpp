@@ -12,20 +12,33 @@ int main() {
   gpio_init(LED_PIN);
   gpio_set_dir(LED_PIN, GPIO_OUT);
 
-  parallel_interface parallel_interface_inst(0);
-  elegoo_tft elegoo_tft_inst(&parallel_interface_inst);
-  elegoo_tft_inst.init();
-  elegoo_tft_inst.set_rotation(3);
-  elegoo_tft_inst.fillScreen(WHITE);
+  parallelInterface parallel_interface_inst(0);
+  ElegooTFT tft(&parallel_interface_inst);
+  tft.init();
+  tft.setRotation(3);
+  tft.fillScreen(CYAN);
+  tft.drawRoundRect(0, 0, 20, 20, 20, RED);
+  tft.drawRoundRect(300, 0, 20, 20, 20, RED);
+  tft.drawRoundRect(0, 220, 20, 20, 20, RED);
+  tft.drawRoundRect(300, 220, 20, 20, 20, RED);
 
   while (1) {
-    elegoo_tft_inst.drawCircle(240, 200, 10, GREEN);
-    elegoo_tft_inst.fillCircle(40, 40, 9, WHITE);
-    elegoo_tft_inst.setTextColor(BLUE);
-    elegoo_tft_inst.setTextSize(4);
-    elegoo_tft_inst.setCursor(50, 50);
-    elegoo_tft_inst.println("kayas");
-    elegoo_tft_inst.drawRoundRect(180, 50, 20, 20, 20, RED);
-    sleep_ms(100);
+
+    tft.drawCircle(240, 200, 10, GREEN);
+    tft.fillCircle(40, 40, 9, WHITE);
+    tft.setTextColor(BLUE);
+    tft.setTextSize(4);
+    tft.setCursor(0, 52);
+    tft.println("Kayas Ahmed");
+    tft.setTextColor(MAGENTA);
+
+    tft.setTextSize(2);
+    tft.println("123456");
+    tft.setTextColor(YELLOW);
+    tft.print('\n');
+    tft.setTextSize(4);
+    tft.print(__DATE__);
+
+    sleep_ms(1000);
   }
 }
