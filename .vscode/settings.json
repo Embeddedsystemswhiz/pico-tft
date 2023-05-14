@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.tcc": "cpp",
+        "array": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "random": "cpp"
+    },
+    "clang-format.executable": "/usr/bin/clang-format-9",
+    "editor.formatOnSave": true,
+}
