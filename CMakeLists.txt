@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.18)
 
+
+
 # Include build functions from Pico SDK
 include(external/pico_sdk_import.cmake)
-
 # Set name of project (as PROJECT_NAME) and C/C++ standards
 project(tft_driver C CXX ASM)
-
+set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 # TODO remove once docker is fixed
@@ -28,7 +29,7 @@ add_executable(tft_test
 include_directories(${CMAKE_SOURCE_DIR})
 
 # Pull in our pico_stdlib which pulls in commonly used features
-target_link_libraries(tft_test pico_stdlib  m)
+target_link_libraries(tft_test pico_stdlib pico_multicore m hardware_rtc)
 target_link_options(tft_test PRIVATE -Wl,--print-memory-usage -Wl,-Map=tft_test.map)
 
 target_compile_options(tft_test PRIVATE -g3 -O0)

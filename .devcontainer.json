@@ -1,40 +1,40 @@
 {
-    "name": "Pico development environment",
-    "image": "kayas257/arm-tool-chain:arm-none-eabi",
-    "customizations": {
-      "vscode": {
-        // Add the IDs of extensions you want installed when the container is created.
-        "extensions": [
-          "dbaeumer.vscode-eslint",
-          "twxs.cmake",
-          "ms-vscode.cmake-tools",
-          "marus25.cortex-debug",
-          "ms-vscode.cpptools",
-          "xaver.clang-format",
-          "wayou.vscode-todo-highlight",
-          "tomoki1207.pdf",
-          "ms-vscode.cpptools-extension-pack"
-        ]
-      },
-      "editor.codeActionsOnSave": {
-        "source.fixAll": true
-      },
-      "editor.formatOnSave": true,
-      "clang-format.executable": "/usr/bin/clang-format-9",
-      "clang-format.style": "google",
-      "clang-format.language.c.enable": true,
-      "[c]": {
-        "editor.defaultFormatter": "xaver.clang-format",
-        "editor.wordBasedSuggestions": false,
-        "editor.suggest.insertMode": "replace",
-        "editor.semanticHighlighting.enabled": true
-      },
-      "[cpp]": {
-        "editor.defaultFormatter": "xaver.clang-format",
-        "editor.wordBasedSuggestions": false,
-        "editor.suggest.insertMode": "replace",
-        "editor.semanticHighlighting.enabled": true
-      }
+  "name": "Pico development environment",
+  "image": "kayas257/arm-tool-chain:arm-none-eabi",
+  "customizations": {
+    "vscode": {
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "twxs.cmake",
+        "ms-vscode.cmake-tools",
+        "marus25.cortex-debug",
+        "ms-vscode.cpptools",
+        "xaver.clang-format",
+        "wayou.vscode-todo-highlight",
+        "tomoki1207.pdf",
+        "ms-vscode.cpptools-extension-pack"
+      ]
     },
-    "postStartCommand": " apt install -y automake autoconf build-essential texinfo libtool libftdi-dev libusb-1.0-0-dev python3-dev git clang-format-9"
-  }
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    },
+    "editor.formatOnSave": true,
+    "clang-format.executable": "/usr/bin/clang-format-9",
+    "clang-format.style": "google",
+    "clang-format.language.c.enable": true,
+    "[c]": {
+      "editor.defaultFormatter": "xaver.clang-format",
+      "editor.wordBasedSuggestions": false,
+      "editor.suggest.insertMode": "replace",
+      "editor.semanticHighlighting.enabled": true
+    },
+    "[cpp]": {
+      "editor.defaultFormatter": "xaver.clang-format",
+      "editor.wordBasedSuggestions": false,
+      "editor.suggest.insertMode": "replace",
+      "editor.semanticHighlighting.enabled": true
+    }
+  },
+  "postStartCommand": " apt install -y automake autoconf build-essential texinfo libtool libftdi-dev libusb-1.0-0-dev python3 python3-dev git clang-format-9 git "
+}

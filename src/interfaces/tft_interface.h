@@ -15,4 +15,5 @@ public:
   virtual void writeRegister8(uint8_t cmd, uint8_t data) = 0;
   virtual void writeRegister16(uint8_t cmd, uint16_t data) = 0;
   virtual void writeRegister32(uint8_t cmd, uint32_t data) = 0;
+  virtual void set_cs(bool action) = 0;
 };

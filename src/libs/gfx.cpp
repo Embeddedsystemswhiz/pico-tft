@@ -25,7 +25,7 @@ ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
 LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
 CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
 SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY writeswOF LIABILITY, WHETHER IN
 CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
@@ -162,13 +162,13 @@ void GFX::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
                    uint16_t color) {
   int16_t steep = abs(y1 - y0) > abs(x1 - x0);
   if (steep) {
-    swap(x0, y0);
-    swap(x1, y1);
+    swap_(x0, y0);
+    swap_(x1, y1);
   }
 
   if (x0 > x1) {
-    swap(x0, x1);
-    swap(y0, y1);
+    swap_(x0, x1);
+    swap_(y0, y1);
   }
 
   int16_t dx, dy;
@@ -267,16 +267,16 @@ void GFX::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
 
   // Sort coordinates by Y order (y2 >= y1 >= y0)
   if (y0 > y1) {
-    swap(y0, y1);
-    swap(x0, x1);
+    swap_(y0, y1);
+    swap_(x0, x1);
   }
   if (y1 > y2) {
-    swap(y2, y1);
-    swap(x2, x1);
+    swap_(y2, y1);
+    swap_(x2, x1);
   }
   if (y0 > y1) {
-    swap(y0, y1);
-    swap(x0, x1);
+    swap_(y0, y1);
+    swap_(x0, x1);
   }
 
   if (y0 == y2) { // Handle awkward all-on-same-line case as its own thing
@@ -318,7 +318,7 @@ void GFX::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
     b = x0 + (x2 - x0) * (y - y0) / (y2 - y0);
     */
     if (a > b)
-      swap(a, b);
+      swap_(a, b);
     drawFastHLine(a, y, b - a + 1, color);
   }
 
@@ -336,7 +336,7 @@ void GFX::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
     b = x0 + (x2 - x0) * (y - y0) / (y2 - y0);
     */
     if (a > b)
-      swap(a, b);
+      swap_(a, b);
     drawFastHLine(a, y, b - a + 1, color);
   }
 }

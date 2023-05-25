@@ -94,7 +94,7 @@ void TFT::flood(uint16_t color, uint32_t len) {
   uint16_t blocks;
   uint8_t i, hi = color >> 8, lo = color;
 
-  tft_interface->write(0x2C, 1, color, 1);
+  tft_interface->write(0x2C, 1, color, 2);
 
   len--;
 
@@ -141,7 +141,9 @@ void TFT::flood(uint16_t color, uint32_t len) {
     tft_interface->write8data(hi);
     tft_interface->write8data(lo);
   }
+  tft_interface->set_cs(true);
 
+  tft_interface->set_cs(false);
   // }
 }
 
@@ -158,4 +160,8 @@ void TFT::sleep(bool action) {
   else
     tft_interface->writeRegister8(ILI9341_DISPLAYON, action);
   sleep_ms(200);
+}
+
+void TFT::setBacklight(uint8_t brightness) {
+  tft_interface->writeRegister8(0x51, brightness);
 }

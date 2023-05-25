@@ -6,7 +6,7 @@
 #include <string.h>
 
 // clang-format off
-#define swap(a, b) { int16_t t = a;  a = b; b = t; }
+#define swap_(a, b) { int16_t t = a;  a = b; b = t; }
 // clang-format on
 
 #define boolean uint8_t

@@ -25,7 +25,7 @@ private:
   inline void write(uint8_t data) { gpio_put_masked(0xff, data & 0xff); }
   uint8_t read8() { return (gpio_get_all() >> gpio_offset && 0xff); }
 
-  void cs_state(bool state) { gpio_put(CS_OFFSET, state); }
+  void inline cs_state(bool state) { gpio_put(CS_OFFSET, state); }
 
   void reset() {
     gpio_put(RST_OFFSET, false);
@@ -66,7 +66,7 @@ public:
 
   void inline write(const uint32_t command, size_t cmd_length,
                     const uint32_t data, size_t data_length) override {
-   // cs_state(false);
+    // cs_state(false);
 
     do {
       write8cmd((command >> (8 * (cmd_length - 1))) & 0xff);
@@ -76,7 +76,7 @@ public:
       write8data((data >> (8 * (data_length - 1))) & 0xff);
     } while (--data_length);
 
-  //  cs_state(true);
+    //  cs_state(true);
   }
   void writeRegister8(uint8_t cmd, uint8_t data) { write(cmd, 1, data, 1); }
 
@@ -98,4 +98,6 @@ public:
     write_strobe();
     data_enable(true);
   }
+
+  void set_cs(bool action) { cs_state(action); }
 };

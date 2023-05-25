@@ -21,4 +21,5 @@ public:
   void flood(uint16_t color, uint32_t len);
   void fillScreen(uint16_t color);
   void sleep(bool action);
+  void setBacklight(uint8_t brightness);
 };
